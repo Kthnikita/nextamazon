@@ -19,17 +19,12 @@ export default function Home() {
   //  const res=await fetch("https://dummyjson.com/products?limit=50");
   // const resl= await res.json();
   // const prod=resl?.products||[];
-  let prod=[]
-  try{
-     prod=await prismaclient.products.findMany();
-  }
-  catch(e){
-    console.log(e);
-  }
+  const res=await fetch("http://localhost:3000/api/products");
+  const resp=await res.json();
+  const prod=resp?.data;
   return (
    <div className="min-h-screen w-full flex items-center justify-center bg-white">
       <Carddata prod={prod}/>
-   
     </div>
   )
  }

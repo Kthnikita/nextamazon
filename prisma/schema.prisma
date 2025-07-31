@@ -21,3 +21,21 @@ model products {
   price       Float
   img_url     String
 }
+
+model cart {
+  id          String @id @default(auto()) @map("_id") @db.ObjectId
+  title       String
+  description String
+  price       Float
+  img_url     String
+  quantity    Int?
+}
+
+model user {
+  id       String @id @default(auto()) @map("_id") @db.ObjectId
+  username String @unique
+  email    String @unique
+  name     String
+  password String
+  avatar   String?
+}

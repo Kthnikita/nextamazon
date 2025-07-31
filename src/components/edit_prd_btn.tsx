@@ -3,12 +3,13 @@
 import { Button, Dialog, Flex, Text, TextField } from '@radix-ui/themes'
 import React, { useState } from 'react'
 import { editprd } from '@/service/productaction'
-function Editbtn({item}) {
+function Editbtn({item,editprod}) {
         const [title,setitle]=useState(item.title)
         const [des,setdes]=useState(item.description)
         const [price,setprice]=useState(item.price);
         const [img,setimg]=useState(item.img_url);
-        function handeledit(){
+       async function handeledit(){
+		
             const parseprice=Number.parseFloat(price);
             const obj={
                 title,
@@ -16,7 +17,15 @@ function Editbtn({item}) {
                 price:parseprice,
                 img_url :img
             }
-        const resp=editprd(obj,item.id);
+		  // const resp= await editprd(obj,item.id);
+		  editprod(obj,item.id);
+		  const request=await fetch("http://localhost:3000/api/products/update",{
+        method:"POST",
+        body:JSON.stringify({
+			...obj,
+			id:item.id
+		})
+       })
         }
   return (
   

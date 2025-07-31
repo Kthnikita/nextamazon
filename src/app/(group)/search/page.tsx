@@ -12,27 +12,30 @@ export function generateMetadata({searchParams}){
 }
 async function  page({searchParams}){
     const query=searchParams.q;
+    const resp=await fetch(`http://localhost:3000/api/search?q=${query}`);
+    const resl=await resp.json();
+    const data=resl?.data;
     // const min=searchParams.min;
     // const max=searchParams.max;
     // const rating=searchParams.rate;
     // const sort=searchParams.sort;
-    let data=[];
-    try{
+    // let data=[];
+    // try{
     //   const url='https://dummyjson.com/products/search?q='+query;
     // const resp= await fetch(url);
     // const resl=await resp.json();
     // data=resl?.products;
-   data= await prismaclient.products.findMany({
-      where:{
-        title:{
-          contains:query
-        }
-      }
-    })
-    }
-    catch(err){
-      console.log("error");
-    }
+  //  data= await prismaclient.products.findMany({
+  //     where:{
+  //       title:{
+  //         contains:query
+  //       }
+  //     }
+  //   })
+  //   }
+  //   catch(err){
+  //     console.log("error");
+  //   }
     // let arr=products.filter((val)=>{if(val.title.toLowerCase().includes(query.toLowerCase()))return true})
   //  if(min){
   //   data =data.filter((val)=>{if(val.price>min)return true})
@@ -62,11 +65,11 @@ async function  page({searchParams}){
           return (
             <div
               className="h-[500px] w-[400px] flex flex-col justify-between bg-white rounded shadow-md border border-gray-200 hover:shadow-lg transition-all duration-300 m-5"
-              key={ind}
+              key={val.id}
             >
               <Link href={`/product/${val.id}`}>
                 <img
-                  src={val.thumbnail}
+                  src={val.img_url}
                   alt=""
                   className="w-full h-[220px] object-contain p-4"
                 />
@@ -79,9 +82,9 @@ async function  page({searchParams}){
                 <p className="text-sm text-gray-600 line-clamp-3">
                   {val.description}
                 </p>
-                <p className="text-md text-yellow-400 font-semibold line-clamp-3 mt-1">
+                {/* <p className="text-md text-yellow-400 font-semibold line-clamp-3 mt-1">
                   ⭐{val.rating}
-                </p>
+                </p> */}
                 <p className="text-xl font-bold text-red-600 mt-1">
                   ₹{val.price}
                 </p>

@@ -8,7 +8,7 @@ function Addbtn() {
 	const [des,setdes]=useState("")
 	const [price,setprice]=useState();
 	const [img,setimg]=useState("");
-    function handelsubmit(){
+    async function handelsubmit(){
         const parseprice=Number.parseFloat(price);
         const obj={
             title,
@@ -16,7 +16,11 @@ function Addbtn() {
             price:parseprice,
             img_url :img
         }
-    const resp=addproduct(obj);
+    // const resp=addproduct(obj);
+	const request=await fetch("http://localhost:3000/api/products",{
+        method:"POST",
+        body:JSON.stringify(obj)
+       })
     }
   return (
     <div>

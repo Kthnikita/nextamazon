@@ -1,11 +1,15 @@
 //@ts-nocheck
 'use client'
 import Link from "next/link"
-import { useEffect, useState } from "react"
+import { useContext, useEffect, useState } from "react"
 import Addbtn from "./add_prd_btn";
+import { context } from "./cartcontext";
+import { sign } from "crypto";
+import { logout } from "@/service/productaction";
 function Navbar() {
   const[searchval,setsearchval]=useState("");
   const[suggestion,setsuggestion]=useState([]);
+  const{cart,setcart,username,setuser}=useContext(context);
   useEffect(()=>{
      async function fetchdata() {
         const resp=await fetch("https://dummyjson.com/products?limit=194");
@@ -63,7 +67,7 @@ function Navbar() {
       </div>
       <div className="h-[60px] w-[170px] flex justify-center items-center">
         <div className="h-[40px] w-[170px]">
-         <Link href="/login"> <p className="text-sm text-white">Hello, sign in</p></Link>
+         {username==""?<Link href="/login"> <p className="text-sm text-white">Hello, sign in</p></Link>:<button className="text-sm text-white" onClick={logout}>Hello, {username}</button>}
         <p className="text-md font-bold text-white">Accounts & Lists</p>
         </div>
       </div>
@@ -75,7 +79,7 @@ function Navbar() {
       <div className="w-[100px] h-[60px] flex items-center justify-center">
         <Link href="/cart"><div className="w-[100px] h-[45px] relative text-4xl">
           🛒<span className="text-sm text-white">Cart</span>
-          <div className="h-4 w-4 rounded-full bg-orange-600 absolute top-0 right-12 text-white text-sm flex justify-center items-center">0</div>
+          <div className="h-4 w-4 rounded-full bg-orange-600 absolute top-0 right-12 text-white text-sm flex justify-center items-center">{cart.length}</div>
         </div></Link>
       </div>
     {/* <div className="flex gap-4 w-24 h-24 justify-center items-center mr-6 text-black">

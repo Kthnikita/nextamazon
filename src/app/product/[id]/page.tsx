@@ -32,14 +32,17 @@ async function page({params}) {
     //      arr=arr.filter((e)=>{if(e.id!=delid)return true})
     // }
     const paramid=params.id
-    const val=await prismaclient.products.findUnique({
-        where:{
-            id:paramid
-        }
-    })
-    if(!val){
-        return <div>not found</div>
-    }
+    const resp=await fetch(`http://localhost:3000/api/products/${paramid}`);
+    const resl=await resp.json();
+    const val=resl?.data;
+    // const val=await prismaclient.products.findUnique({
+    //     where:{
+    //         id:paramid
+    //     }
+    // })
+    // if(!val){
+    //     return <div>not found</div>
+    // }
   return (
     
            
